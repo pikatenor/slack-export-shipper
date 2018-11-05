@@ -1,7 +1,9 @@
 {
-  "template": "slack-*",
+  "index_patterns": "slack-*",
   "settings":{
     "index": {
+      "number_of_replicas": "1",
+      "number_of_shards": "1",
       "analysis":{
         "analyzer":{
           "kuromoji":{
@@ -58,7 +60,7 @@
     }
   },
   "mappings": {
-    "slack-message": {
+    "slack-messages": {
       "dynamic_templates":[
         {
           "texts": {
@@ -68,6 +70,14 @@
               "type": "text",
               "analyzer": "kuromoji",
               "fielddata": true
+            }
+          }
+        },
+        {
+          "other_strings": {
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "keyword"
             }
           }
         }
